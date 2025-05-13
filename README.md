@@ -39,9 +39,12 @@ An interactive web application that combines AI-powered data analysis with natur
    npm install
    ```
 
-3. Set up environment variables:
-   - Copy `.env.example` to `.env.development`
-   - Update the API URL to point to your development API
+3. Environment Configuration:
+   The project includes pre-configured environment files:
+   - `.env.development` - Development settings (API URL: http://localhost:3000/api)
+   - `.env.production` - Production settings (update with your production API URL)
+
+   No additional setup is needed for development. For production, update the API URL in `.env.production`.
 
 4. Start the development server:
    ```bash
@@ -50,11 +53,7 @@ An interactive web application that combines AI-powered data analysis with natur
 
 ### Building for Production
 
-1. Set up production environment:
-   - Copy `.env.example` to `.env.production`
-   - Update the API URL to point to your production API
-
-2. Build the project:
+1. Build the project:
    ```bash
    npm run build
    ```
@@ -66,7 +65,6 @@ src/
 ├── components/     # React components
 ├── hooks/         # Custom React hooks
 ├── types/         # TypeScript type definitions
-├── utils/         # Utility functions
 └── assets/        # Static assets
 ```
 
@@ -82,17 +80,9 @@ src/
 - `npm run lint`: Run ESLint
 - `npm run preview`: Preview production build
 
-## Contributing
-
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
 ## License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
