@@ -3,13 +3,7 @@ import { useFileAnalysis } from '../hooks/useFileAnalysis';
 import { FileUpload } from './FileUpload';
 import { AnalysisResults } from './AnalysisResults';
 import { toast } from 'react-hot-toast';
-
-const LoadingSpinner = () => (
-  <div className="flex flex-col items-center justify-center p-8">
-    <div className="animate-spin rounded-full h-12 w-12 border-4 border-blue-500 border-t-transparent"></div>
-    <p className="mt-4 text-lg text-gray-600">Analyzing your data...</p>
-  </div>
-);
+import { LoadingSpinner } from './LoadingSpinner';
 
 export const MainContent = () => {
   const mutation = useFileAnalysis();

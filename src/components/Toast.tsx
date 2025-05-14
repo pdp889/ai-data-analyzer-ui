@@ -8,7 +8,7 @@ const TOAST_CONFIG = {
     color: '#fff',
   },
   success: {
-    duration: 3000,
+    duration: 4000,
     iconTheme: {
       primary: '#4ade80',
       secondary: '#fff',
