@@ -4,7 +4,8 @@ import { FileIcon } from './FileIcon';
 export enum HeaderStatus {
   UPLOAD = 'upload',
   LOADING = 'loading',
-  ANALYSIS = 'analysis'
+  ANALYSIS = 'analysis',
+  FETCHING_ANALYSIS = 'fetching_analysis'
 }
 
 interface HeaderProps {
@@ -19,6 +20,8 @@ export const Header = ({ status }: HeaderProps) => {
       case HeaderStatus.LOADING:
         return 'Your data is being analyzed in real-time';
       case HeaderStatus.ANALYSIS:
+        return '';
+      case HeaderStatus.FETCHING_ANALYSIS:
         return '';
       default:
         return '';

@@ -2,13 +2,20 @@ import { motion } from 'framer-motion';
 import { Header, HeaderStatus } from './Header';
 
 interface LoadingSpinnerProps {
-  message?: string;
+  status?: HeaderStatus;
 }
 
-export const LoadingSpinner = ({ message = "Analyzing your data..." }: LoadingSpinnerProps) => {
+export const LoadingSpinner = ({ status = HeaderStatus.LOADING }: LoadingSpinnerProps) => {
+  let message;
+  if (status === HeaderStatus.FETCHING_ANALYSIS) {
+    message = "Checking for existing analysis...";
+  } else {
+    message = "Analyzing your data...";
+  }
+
   return (
     <div className="max-w-2xl mx-auto p-8">
-        <Header status={HeaderStatus.LOADING} />
+        <Header status={status} />
         <div className="flex flex-col items-center justify-center space-y-4">
             <motion.div
             animate={{ rotate: 360 }}

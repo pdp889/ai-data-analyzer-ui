@@ -27,6 +27,7 @@ export const useChat = () => {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ question }),
+        credentials: 'include',
       });
 
       if (!response.ok) {

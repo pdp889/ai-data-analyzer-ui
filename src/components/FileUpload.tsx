@@ -94,15 +94,6 @@ export const FileUpload = ({ onFileSelect }: FileUploadProps) => {
           <p className="mt-2 text-xs text-gray-400">Maximum file size: 5MB</p>
         </div>
       </motion.div>
-
-      <motion.div 
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.5 }}
-        className="mt-8 text-center text-sm text-gray-500"
-      >
-        <p>Your data is processed securely and never stored on our servers</p>
-      </motion.div>
     </div>
   );
 }; 

@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import type { FormEvent } from 'react';
 import { useChat } from '../hooks/useChat';
 import { motion, AnimatePresence } from 'framer-motion';
+import { toast } from 'react-hot-toast';
 
 const formatTime = (date: Date) => {
   return new Intl.DateTimeFormat('en-US', {
@@ -11,7 +12,13 @@ const formatTime = (date: Date) => {
   }).format(date);
 };
 
-const MessageBubble = ({ message, index }: { message: any; index: number }) => {
+interface ChatMessageFromHook {
+  role: 'user' | 'assistant';
+  content: string;
+  timestamp: Date;
+}
+
+const MessageBubble = ({ message, index }: { message: ChatMessageFromHook; index: number }) => {
   const isUser = message.role === 'user';
   
   return (
@@ -74,7 +81,7 @@ const LoadingDots = () => (
 
 export const Chat = () => {
   const [input, setInput] = useState('');
-  const { messages, sendMessage, isPending } = useChat();
+  const { messages, sendMessage, isPending, error } = useChat();
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {
@@ -84,6 +91,12 @@ export const Chat = () => {
   useEffect(() => {
     scrollToBottom();
   }, [messages]);
+
+  useEffect(() => {
+    if (error) {
+      toast.error(error.message || 'An error occurred in the chat.');
+    }
+  }, [error]);
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -97,7 +110,7 @@ export const Chat = () => {
     <div className="flex flex-col h-[600px] bg-white rounded-lg overflow-hidden">
       <div className="flex-1 overflow-y-auto p-3 space-y-3">
         <AnimatePresence>
-          {messages.map((message, index) => (
+          {messages.map((message: ChatMessageFromHook, index: number) => (
             <MessageBubble key={index} message={message} index={index} />
           ))}
           {isPending && <LoadingDots />}

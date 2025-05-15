@@ -28,5 +28,5 @@ export interface AnalysisData {
 
 export interface AnalysisResponse {
   status: 'success';
-  data: AnalysisData;
+  data: AnalysisData | null;
 } 
