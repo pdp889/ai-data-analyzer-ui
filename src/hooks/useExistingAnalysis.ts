@@ -9,7 +9,7 @@ if (!API_URL) {
 
 const fetchExistingAnalysis = async (): Promise<AnalysisResponse> => {
   const response = await fetch(API_URL, {
-    method: 'POST',
+    method: 'GET',
     credentials: 'include',
   });
 
