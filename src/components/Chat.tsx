@@ -20,16 +20,16 @@ interface ChatMessageFromHook {
 
 const MessageBubble = ({ message, index }: { message: ChatMessageFromHook; index: number }) => {
   const isUser = message.role === 'user';
-  
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20, scale: 0.95 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ 
-        type: "spring",
+      transition={{
+        type: 'spring',
         stiffness: 260,
         damping: 20,
-        delay: index * 0.1 
+        delay: index * 0.1,
       }}
       className={`flex ${isUser ? 'justify-end' : 'justify-start'}`}
     >
@@ -101,7 +101,7 @@ export const Chat = () => {
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!input.trim() || isPending) return;
-    
+
     sendMessage(input.trim());
     setInput('');
   };
@@ -123,13 +123,13 @@ export const Chat = () => {
         className="p-3 border-t bg-gray-50"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ type: "spring", stiffness: 260, damping: 20 }}
+        transition={{ type: 'spring', stiffness: 260, damping: 20 }}
       >
         <div className="flex space-x-2">
           <motion.input
             type="text"
             value={input}
-            onChange={(e) => setInput(e.target.value)}
+            onChange={e => setInput(e.target.value)}
             placeholder="Ask a question about the data..."
             className="flex-1 p-2 text-sm border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
             disabled={isPending}
@@ -148,4 +148,4 @@ export const Chat = () => {
       </motion.form>
     </div>
   );
-}; 
+};

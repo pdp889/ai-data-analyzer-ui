@@ -33,4 +33,4 @@ export const useExistingAnalysis = () => {
     queryFn: fetchExistingAnalysis,
     staleTime: Infinity,
   });
-}; 
+};

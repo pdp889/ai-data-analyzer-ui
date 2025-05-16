@@ -5,12 +5,19 @@ import { AnalysisResults } from './AnalysisResults';
 import { toast } from 'react-hot-toast';
 import { LoadingSpinner } from './LoadingSpinner';
 import { useExistingAnalysis } from '../hooks/useExistingAnalysis';
-import { HeaderStatus } from './Header';
+import { HeaderStatus } from '../types/header';
+import { useQueryClient } from '@tanstack/react-query';
 
 export const MainContent = () => {
   const existingAnalysisQuery = useExistingAnalysis();
-  
+  const queryClient = useQueryClient();
   const mutation = useFileAnalysis();
+
+  const handleClear = () => {
+    // Reset the mutation data
+    mutation.reset();
+    queryClient.setQueryData(['existingAnalysis'], { status: 'success', data: null });
+  };
 
   useEffect(() => {
     if (mutation.isSuccess) {
@@ -22,7 +29,9 @@ export const MainContent = () => {
 
   useEffect(() => {
     if (existingAnalysisQuery.isError) {
-      toast.error(existingAnalysisQuery.error?.message ?? 'An error occurred fetching existing analysis');
+      toast.error(
+        existingAnalysisQuery.error?.message ?? 'An error occurred fetching existing analysis'
+      );
     }
   }, [existingAnalysisQuery.isError, existingAnalysisQuery.error]);
 
@@ -42,19 +51,24 @@ export const MainContent = () => {
 
       {/* Case 2: New analysis data is available (and not pending) - takes precedence */}
       {!mutation.isPending && mutation.data && (
-        <AnalysisResults data={mutation.data} />
+        <AnalysisResults data={mutation.data} onClear={handleClear} />
       )}
 
       {/* Case 3: No new analysis active or completed, but existing analysis data is available */}
-      {!mutation.isPending && !mutation.data && existingAnalysisQuery.data && existingAnalysisQuery.data.data && (
-        <AnalysisResults data={existingAnalysisQuery.data} />
-      )}
+      {!mutation.isPending &&
+        !mutation.data &&
+        existingAnalysisQuery.data &&
+        existingAnalysisQuery.data.data && (
+          <AnalysisResults data={existingAnalysisQuery.data} onClear={handleClear} />
+        )}
 
       {/* Case 4: No new analysis (pending or data), no existing data -> Show FileUpload */}
       {/* This also implies existingAnalysisQuery.isLoading is false and existingAnalysisQuery.data is not available. */}
-      {!mutation.isPending && !mutation.data && (!existingAnalysisQuery.data || !existingAnalysisQuery.data.data) && (
-        <FileUpload onFileSelect={handleFileSelect} />
-      )}
+      {!mutation.isPending &&
+        !mutation.data &&
+        (!existingAnalysisQuery.data || !existingAnalysisQuery.data.data) && (
+          <FileUpload onFileSelect={handleFileSelect} />
+        )}
     </div>
   );
-}; 
+};

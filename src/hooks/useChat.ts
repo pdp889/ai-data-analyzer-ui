@@ -37,7 +37,7 @@ export const useChat = () => {
 
       return response.json();
     },
-    onSuccess: (data) => {
+    onSuccess: data => {
       setMessages(prev => [
         ...prev,
         { role: 'assistant', content: data.data.answer, timestamp: new Date() },
@@ -47,10 +47,7 @@ export const useChat = () => {
 
   const sendMessage = (question: string) => {
     const now = new Date();
-    setMessages(prev => [
-      ...prev,
-      { role: 'user', content: question, timestamp: now },
-    ]);
+    setMessages(prev => [...prev, { role: 'user', content: question, timestamp: now }]);
     mutation.mutate(question);
   };
 
@@ -60,4 +57,4 @@ export const useChat = () => {
     isPending: mutation.isPending,
     error: mutation.error,
   };
-}; 
+};

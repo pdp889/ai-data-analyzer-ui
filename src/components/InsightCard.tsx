@@ -16,4 +16,4 @@ export const InsightCard = ({ insight }: InsightCardProps) => (
     </div>
     <p className="text-gray-600">{insight.description}</p>
   </div>
-); 
+);

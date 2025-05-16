@@ -9,7 +9,7 @@ if (!API_URL) {
 
 export const useFileAnalysis = () => {
   return useMutation<AnalysisResponse, Error, File>({
-    mutationFn: async (file) => {
+    mutationFn: async file => {
       const formData = new FormData();
       formData.append('file', file);
 
@@ -27,4 +27,4 @@ export const useFileAnalysis = () => {
       return response.json();
     },
   });
-}; 
+};

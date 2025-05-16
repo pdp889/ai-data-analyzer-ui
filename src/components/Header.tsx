@@ -1,12 +1,6 @@
 import { motion } from 'framer-motion';
 import { FileIcon } from './FileIcon';
-
-export enum HeaderStatus {
-  UPLOAD = 'upload',
-  LOADING = 'loading',
-  ANALYSIS = 'analysis',
-  FETCHING_ANALYSIS = 'fetching_analysis'
-}
+import { HeaderStatus } from '../types/header';
 
 interface HeaderProps {
   status: HeaderStatus;
@@ -33,17 +27,14 @@ export const Header = ({ status }: HeaderProps) => {
       layout
       className={`mb-8 ${status === HeaderStatus.ANALYSIS ? 'max-w-[1600px] mx-auto' : ''}`}
     >
-      <motion.div 
-        layout
-        className="flex items-center space-x-4 mb-4"
-      >
+      <motion.div layout className="flex items-center space-x-4 mb-4">
         <motion.div layout>
           <FileIcon />
         </motion.div>
         <motion.div layout>
           <h1 className="text-2xl font-bold text-gray-800">AI Data Analysis</h1>
           {getSubtitle() && (
-            <motion.p 
+            <motion.p
               layout
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}

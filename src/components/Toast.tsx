@@ -23,4 +23,4 @@ const TOAST_CONFIG = {
   },
 } as const;
 
-export const Toast = () => <Toaster {...TOAST_CONFIG} />; 
+export const Toast = () => <Toaster {...TOAST_CONFIG} />;

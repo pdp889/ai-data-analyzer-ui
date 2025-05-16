@@ -4,13 +4,21 @@ import { Chat } from './Chat';
 import { InsightCard } from './InsightCard';
 import { ChevronIcon } from './ChevronIcon';
 import { motion } from 'framer-motion';
-import { Header, HeaderStatus } from './Header';
+import { Header } from './Header';
+import { HeaderStatus } from '../types/header';
+
+import { useClearSession } from '../hooks/useClearSession';
+import { toast } from 'react-hot-toast';
 
 interface AnalysisResultsProps {
   data: AnalysisResponse;
+  onClear?: () => void;
 }
 
-export const AnalysisResults = ({ data }: AnalysisResultsProps) => {
+export const AnalysisResults = ({ data, onClear }: AnalysisResultsProps) => {
+  const [isProfileExpanded, setIsProfileExpanded] = useState(false);
+  const { mutate: clearSession, isPending } = useClearSession();
+
   if (!data || !data.data) {
     return (
       <div className="max-w-[1600px] mx-auto p-8 text-center">
@@ -20,19 +28,40 @@ export const AnalysisResults = ({ data }: AnalysisResultsProps) => {
   }
 
   const { profile, insights, narrative } = data.data;
-  const [isProfileExpanded, setIsProfileExpanded] = useState(false);
+
+  const handleClear = () => {
+    clearSession(undefined, {
+      onSuccess: () => {
+        toast.success('Analysis session cleared successfully');
+        onClear?.();
+      },
+      onError: error => {
+        toast.error(error.message || 'Failed to clear session');
+      },
+    });
+  };
 
   return (
     <div className="max-w-[1600px] mx-auto p-8">
       <motion.div
         initial={{ opacity: 0, x: 200 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ 
+        transition={{
           duration: 0.5,
-          ease: "easeOut"
+          ease: 'easeOut',
         }}
+        className="flex justify-between items-center"
       >
         <Header status={HeaderStatus.ANALYSIS} />
+        <motion.button
+          onClick={handleClear}
+          disabled={isPending}
+          className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          {isPending ? 'Clearing...' : 'Clear Analysis'}
+        </motion.button>
       </motion.div>
 
       {/* Main Content */}
@@ -107,11 +136,11 @@ export const AnalysisResults = ({ data }: AnalysisResultsProps) => {
                 <h2 className="text-lg font-semibold text-gray-800">Dataset Profile</h2>
                 <ChevronIcon expanded={isProfileExpanded} />
               </button>
-              
+
               {isProfileExpanded && (
                 <motion.div
                   initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: "auto", opacity: 1 }}
+                  animate={{ height: 'auto', opacity: 1 }}
                   exit={{ height: 0, opacity: 0 }}
                   transition={{ duration: 0.3 }}
                   className="mt-2"
@@ -127,4 +156,4 @@ export const AnalysisResults = ({ data }: AnalysisResultsProps) => {
       </motion.div>
     </div>
   );
-}; 
+};
