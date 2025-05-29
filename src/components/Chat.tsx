@@ -89,7 +89,10 @@ export const Chat = () => {
   };
 
   useEffect(() => {
-    scrollToBottom();
+    // Only scroll if the last message was from the user
+    if (messages.length > 0 && messages[messages.length - 1].role === 'user') {
+      scrollToBottom();
+    }
   }, [messages]);
 
   useEffect(() => {
@@ -104,6 +107,8 @@ export const Chat = () => {
 
     sendMessage(input.trim());
     setInput('');
+    // Scroll to bottom when user sends a message
+    setTimeout(scrollToBottom, 100);
   };
 
   return (
@@ -126,19 +131,30 @@ export const Chat = () => {
         transition={{ type: 'spring', stiffness: 260, damping: 20 }}
       >
         <div className="flex space-x-2">
-          <motion.input
-            type="text"
+          <motion.textarea
             value={input}
             onChange={e => setInput(e.target.value)}
+            onKeyDown={e => {
+              if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                handleSubmit(e as unknown as FormEvent<HTMLFormElement>);
+              }
+            }}
             placeholder="Ask a question about the data..."
-            className="flex-1 p-2 text-sm border rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm"
+            className="flex-1 p-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm resize-none min-h-[40px] max-h-[120px]"
             disabled={isPending}
-            whileFocus={{ scale: 1.01 }}
+            rows={1}
+            style={{ overflow: 'hidden' }}
+            onInput={e => {
+              const target = e.target as HTMLTextAreaElement;
+              target.style.height = 'auto';
+              target.style.height = Math.min(target.scrollHeight, 120) + 'px';
+            }}
           />
           <motion.button
             type="submit"
             disabled={!input.trim() || isPending}
-            className="px-4 py-2 text-sm bg-blue-500 text-white rounded-full hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
+            className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm self-end"
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >

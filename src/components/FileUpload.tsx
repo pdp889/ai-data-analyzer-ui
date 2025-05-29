@@ -13,7 +13,7 @@ const ACCEPTED_FILE_TYPES = {
   'application/vnd.ms-excel': ['.xls'],
 } as const;
 
-const MAX_FILE_SIZE = 5 * 1024 * 1024; // 5MB
+const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
 
 interface FileUploadProps {
   onFileSelect: (file: File) => void;
@@ -37,7 +37,7 @@ export const FileUpload = ({ onFileSelect }: FileUploadProps) => {
       if (!file) return;
 
       if (file.size > MAX_FILE_SIZE) {
-        toast.error('File size exceeds 5MB limit');
+        toast.error('File size exceeds 10MB limit');
         return;
       }
 
@@ -101,7 +101,7 @@ export const FileUpload = ({ onFileSelect }: FileUploadProps) => {
           <div className="flex justify-center space-x-4 text-sm text-gray-500">
             <span className="px-3 py-1 bg-white rounded-full shadow-sm">.CSV</span>
           </div>
-          <p className="mt-2 text-xs text-gray-400">Maximum file size: 5MB</p>
+          <p className="mt-2 text-xs text-gray-400">Maximum file size: 10MB</p>
         </div>
       </motion.div>
     </div>
