@@ -62,11 +62,51 @@ An interactive web application that combines AI-powered data analysis with natur
 
 ```
 src/
-├── components/     # React components
-├── hooks/         # Custom React hooks
-├── types/         # TypeScript type definitions
-└── assets/        # Static assets
+├── features/                # Feature-based modules
+│   ├── analysis/           # Analysis feature
+│   │   ├── components/     # Analysis-specific components
+│   │   ├── hooks/         # Analysis-specific hooks
+│   │   ├── services/      # Analysis API services
+│   │   └── types/         # Analysis type definitions
+│   ├── chat/              # Chat feature
+│   │   ├── components/    # Chat-specific components
+│   │   ├── hooks/        # Chat-specific hooks
+│   │   ├── services/     # Chat API services
+│   │   └── types/        # Chat type definitions
+│   └── file-upload/       # File upload feature
+│       ├── components/    # Upload-specific components
+│       ├── constants/     # Upload-specific constants
+│       └── types/        # Upload type definitions
+├── shared/                # Shared resources
+│   ├── components/       # Reusable components
+│   ├── constants/       # Shared constants
+│   ├── hooks/          # Shared hooks
+│   ├── services/       # Shared services
+│   └── types/          # Shared type definitions
+└── assets/             # Static assets
 ```
+
+### Key Architectural Decisions
+
+1. **Feature-First Organization**:
+   - Each feature is self-contained with its own components, hooks, services, and types
+   - Promotes modularity and maintainability
+   - Makes it easier to understand and modify feature-specific code
+
+2. **Service Layer**:
+   - API calls are abstracted into service files
+   - Services handle error handling and response formatting
+   - Hooks use services for data fetching and mutations
+
+3. **Shared Resources**:
+   - Common components, hooks, and utilities are placed in the shared directory
+   - Constants are separated into their own files
+   - Type definitions are co-located with their features
+
+4. **Type Safety**:
+   - Comprehensive TypeScript types for all components and functions
+   - Explicit return types for better type inference
+   - Shared type definitions for common interfaces
 
 ## Environment Variables
 

@@ -4,35 +4,22 @@ import { toast } from 'react-hot-toast';
 import { motion } from 'framer-motion';
 import type { HTMLMotionProps } from 'framer-motion';
 import { FileIcon } from './FileIcon';
-import { Header } from './Header';
-import { HeaderStatus } from '../types/header';
-
-const ACCEPTED_FILE_TYPES = {
-  'text/csv': ['.csv'],
-  'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet': ['.xlsx'],
-  'application/vnd.ms-excel': ['.xls'],
-} as const;
-
-const MAX_FILE_SIZE = 10 * 1024 * 1024; // 10MB
+import { UploadIcon } from './UploadIcon';
+import { Header } from '../../../shared/components/Header';
+import { HeaderStatus } from '../../../shared/types/header.types';
+import {
+  ACCEPTED_FILE_TYPES,
+  MAX_FILE_SIZE,
+  SUPPORTED_FILE_EXTENSIONS,
+} from '../constants/file-upload.constants';
 
 interface FileUploadProps {
   onFileSelect: (file: File) => void;
 }
 
-const UploadIcon = () => (
-  <svg className="w-12 h-12 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-    <path
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={2}
-      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-    />
-  </svg>
-);
-
-export const FileUpload = ({ onFileSelect }: FileUploadProps) => {
+export const FileUpload = ({ onFileSelect }: FileUploadProps): JSX.Element => {
   const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
+    (acceptedFiles: File[]): void => {
       const file = acceptedFiles[0];
       if (!file) return;
 
@@ -41,13 +28,12 @@ export const FileUpload = ({ onFileSelect }: FileUploadProps) => {
         return;
       }
 
-      onFileSelect(file); //the prop is a function, and it gets called assuming all is good, when onDrop is called
+      onFileSelect(file);
     },
     [onFileSelect]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    //setting up the dropzone to call onDrop when a file is dropped
     onDrop,
     accept: ACCEPTED_FILE_TYPES,
     maxFiles: 1,
@@ -99,7 +85,11 @@ export const FileUpload = ({ onFileSelect }: FileUploadProps) => {
         <div className="mt-6 p-4 bg-gray-50 rounded-lg">
           <h3 className="text-sm font-medium text-gray-700 mb-2">Supported File Types</h3>
           <div className="flex justify-center space-x-4 text-sm text-gray-500">
-            <span className="px-3 py-1 bg-white rounded-full shadow-sm">.CSV</span>
+            {SUPPORTED_FILE_EXTENSIONS.map(extension => (
+              <span key={extension} className="px-3 py-1 bg-white rounded-full shadow-sm">
+                {extension}
+              </span>
+            ))}
           </div>
           <p className="mt-2 text-xs text-gray-400">Maximum file size: 10MB</p>
         </div>

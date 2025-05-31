@@ -1,22 +1,15 @@
-export type ColumnType = 'numeric' | 'categorical' | 'datetime' | 'text';
+type ColumnType = 'numeric' | 'categorical' | 'datetime' | 'text';
 
-export interface ColumnInfo {
+interface ColumnInfo {
   name: string;
   type: ColumnType;
   uniqueValues?: number;
   missingValues?: number;
 }
 
-export type InsightType = 'correlation' | 'trend' | 'anomaly' | 'pattern';
+type InsightType = 'correlation' | 'trend' | 'anomaly' | 'pattern';
 
-export interface Insight {
-  type: InsightType;
-  description: string;
-  confidence: number;
-  supportingData: Record<string, unknown>;
-}
-
-export interface AnalysisData {
+interface AnalysisData {
   columns: ColumnInfo[];
   rowCount: number;
   summary: string;
@@ -29,4 +22,11 @@ export interface AnalysisData {
 export interface AnalysisResponse {
   status: 'success';
   data: AnalysisData | null;
+}
+
+export interface Insight {
+  type: InsightType;
+  description: string;
+  confidence: number;
+  supportingData: Record<string, unknown>;
 }

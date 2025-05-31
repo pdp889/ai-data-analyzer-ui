@@ -1,4 +1,4 @@
-import type { Insight } from '../types/api';
+import type { Insight } from '../types/analysis.types';
 
 interface InsightCardProps {
   insight: Insight;

@@ -1,13 +1,13 @@
 import { useState } from 'react';
-import type { AnalysisResponse, Insight } from '../types/api';
-import { Chat } from './Chat';
+import type { AnalysisResponse, Insight } from '../types/analysis.types';
+import { Chat } from '../../chat/components/Chat';
 import { InsightCard } from './InsightCard';
 import { ChevronIcon } from './ChevronIcon';
 import { motion } from 'framer-motion';
-import { Header } from './Header';
-import { HeaderStatus } from '../types/header';
+import { Header } from '../../../shared/components/Header';
+import { HeaderStatus } from '../../../shared/types/header.types';
 
-import { useClearSession } from '../hooks/useClearSession';
+import { useClearSession } from '../hooks/clear-session.hook';
 import { toast } from 'react-hot-toast';
 
 interface AnalysisResultsProps {

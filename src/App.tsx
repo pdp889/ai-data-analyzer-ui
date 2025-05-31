@@ -1,11 +1,11 @@
-import { Toast } from './components/Toast';
-import { MainContent } from './components/MainContent';
+import { Toast } from './shared/components/Toast';
+import { AppContent } from './shared/components/AppContent';
 
 export const App = () => {
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <Toast />
-      <MainContent />
+      <AppContent />
     </div>
   );
 };
