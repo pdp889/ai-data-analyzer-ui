@@ -7,21 +7,18 @@ if (!API_URL) {
 }
 
 export const fetchExistingAnalysis = async (): Promise<AnalysisResponse> => {
-  const response = await fetch(API_URL, {
-    method: 'GET',
-    credentials: 'include',
-  });
+  try {
+    const response = await fetch(API_URL, {
+      method: 'GET',
+      credentials: 'include',
+    });
 
-  if (!response.ok) {
-    let errorMessage = 'Failed to fetch existing analysis';
-    try {
-      const errorData = await response.json();
-      errorMessage = errorData.message || errorMessage;
-    } catch {
-      errorMessage = `Failed to fetch existing analysis: ${response.statusText || response.status}`;
+    if (!response.ok) {
+      return { status: 'success', data: null };
     }
-    throw new Error(errorMessage);
-  }
 
-  return response.json();
+    return response.json();
+  } catch {
+    return { status: 'success', data: null };
+  }
 };

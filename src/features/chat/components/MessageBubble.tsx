@@ -24,7 +24,7 @@ export const MessageBubble = ({ message, index }: MessageBubbleProps): JSX.Eleme
     >
       <div className="flex flex-col max-w-[80%]">
         <div
-          className={`rounded-2xl p-3 ${
+          className={`rounded-2xl p-3 break-words whitespace-pre-wrap ${
             isUser
               ? 'bg-blue-500 text-white rounded-br-none'
               : 'bg-gray-100 text-gray-800 rounded-bl-none'
