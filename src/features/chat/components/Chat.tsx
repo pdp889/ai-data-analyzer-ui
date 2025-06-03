@@ -6,6 +6,7 @@ import { toast } from 'react-hot-toast';
 import type { ChatMessage } from '../types/chat.types';
 import { MessageBubble } from './MessageBubble';
 import { LoadingDots } from './LoadingDots';
+import { MAX_MESSAGE_LENGTH, sanitizeInput } from '../utils/sanitize';
 
 export const Chat = (): JSX.Element => {
   const [input, setInput] = useState('');
@@ -31,12 +32,27 @@ export const Chat = (): JSX.Element => {
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    if (!input.trim() || isPending) return;
-
-    sendMessage(input.trim());
+    const trimmedInput = input.trim();
+    
+    if (!trimmedInput || isPending) return;
+    
+    const result = sanitizeInput(trimmedInput);
+    if (!result.isValid) {
+      toast.error(result.error || 'An error occurred in the chat.');
+      return;
+    }
+    
+    sendMessage(result.sanitizedInput);
     setInput('');
     // Scroll to bottom when user sends a message
     setTimeout(scrollToBottom, 100);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    if (value.length <= MAX_MESSAGE_LENGTH) {
+      setInput(value);
+    }
   };
 
   return (
@@ -61,7 +77,7 @@ export const Chat = (): JSX.Element => {
         <div className="flex space-x-2">
           <motion.textarea
             value={input}
-            onChange={e => setInput(e.target.value)}
+            onChange={handleInputChange}
             onKeyDown={e => {
               if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
@@ -78,6 +94,7 @@ export const Chat = (): JSX.Element => {
               target.style.height = 'auto';
               target.style.height = Math.min(target.scrollHeight, 120) + 'px';
             }}
+            maxLength={MAX_MESSAGE_LENGTH}
           />
           <motion.button
             type="submit"
@@ -88,6 +105,9 @@ export const Chat = (): JSX.Element => {
           >
             Send
           </motion.button>
+        </div>
+        <div className="text-xs text-gray-500 mt-1 text-right">
+          {input.length}/{MAX_MESSAGE_LENGTH} characters
         </div>
       </motion.form>
     </div>

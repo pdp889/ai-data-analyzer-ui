@@ -9,13 +9,13 @@ import { Header } from '../../../shared/components/Header';
 import { HeaderStatus } from '../../../shared/types/header.types';
 import {
   ACCEPTED_FILE_TYPES,
-  MAX_FILE_SIZE,
   SUPPORTED_FILE_EXTENSIONS,
 } from '../constants/file-upload.constants';
-
+import { validateFile } from '../utils/validate';
 interface FileUploadProps {
   onFileSelect: (file: File) => void;
 }
+
 
 export const FileUpload = ({ onFileSelect }: FileUploadProps): JSX.Element => {
   const onDrop = useCallback(
@@ -23,8 +23,9 @@ export const FileUpload = ({ onFileSelect }: FileUploadProps): JSX.Element => {
       const file = acceptedFiles[0];
       if (!file) return;
 
-      if (file.size > MAX_FILE_SIZE) {
-        toast.error('File size exceeds 10MB limit');
+      const validationError = validateFile(file);
+      if (validationError) {
+        toast.error(validationError);
         return;
       }
 
