@@ -9,15 +9,32 @@ An interactive web application that combines AI-powered data analysis with natur
 - **Smart Insights**: Get automated insights and anomalies detection
 - **Dataset Profile**: View detailed statistics and information about your dataset
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
+- **Real-time Analysis**: Get instant feedback on your data
+- **Session Management**: Clear analysis sessions when needed
+- **Secure File Handling**: Robust file validation and security measures
 
 ## Tech Stack
 
-- **Frontend**: React + TypeScript + Vite
+- **Frontend**: React 18 + TypeScript + Vite
 - **Styling**: Tailwind CSS
-- **State Management**: React Query
+- **State Management**: React Query (TanStack Query)
 - **Animations**: Framer Motion
 - **File Handling**: React Dropzone
 - **Notifications**: React Hot Toast
+- **Build Tool**: Vite
+- **Code Quality**: ESLint + TypeScript strict mode
+
+## Security Features
+
+- Content Security Policy (CSP) implementation
+- Input sanitization for chat messages
+- Secure file validation
+- XSS protection
+- CSRF protection
+- Secure headers configuration
+- Environment variable protection
+- Request timeout handling
+- Error handling without information leakage
 
 ## Getting Started
 
@@ -40,11 +57,13 @@ An interactive web application that combines AI-powered data analysis with natur
    ```
 
 3. Environment Configuration:
-   The project includes pre-configured environment files:
-   - `.env.development` - Development settings (API URL: http://localhost:3000/api)
-   - `.env.production` - Production settings (update with your production API URL)
+   Create a `.env.development` file with:
+   ```
+   VITE_API_URL=http://localhost:3000/api
+   VITE_ENV=development
+   ```
 
-   No additional setup is needed for development. For production, update the API URL in `.env.production`.
+   For production, create a `.env.production` file with your production API URL.
 
 4. Start the development server:
    ```bash
@@ -56,6 +75,11 @@ An interactive web application that combines AI-powered data analysis with natur
 1. Build the project:
    ```bash
    npm run build
+   ```
+
+2. Preview the production build:
+   ```bash
+   npm run preview
    ```
 
 ## Project Structure
@@ -86,7 +110,7 @@ src/
 └── assets/             # Static assets
 ```
 
-### Key Architectural Decisions
+## Key Architectural Decisions
 
 1. **Feature-First Organization**:
    - Each feature is self-contained with its own components, hooks, services, and types
@@ -97,6 +121,7 @@ src/
    - API calls are abstracted into service files
    - Services handle error handling and response formatting
    - Hooks use services for data fetching and mutations
+   - Request timeouts and error handling implemented
 
 3. **Shared Resources**:
    - Common components, hooks, and utilities are placed in the shared directory
@@ -107,6 +132,13 @@ src/
    - Comprehensive TypeScript types for all components and functions
    - Explicit return types for better type inference
    - Shared type definitions for common interfaces
+
+5. **Security**:
+   - CSP implementation for resource control
+   - Input sanitization for user inputs
+   - Secure file handling and validation
+   - Environment variable protection
+   - Secure headers configuration
 
 ## Environment Variables
 
@@ -120,6 +152,23 @@ src/
 - `npm run lint`: Run ESLint
 - `npm run preview`: Preview production build
 
+## Performance Optimizations
+
+- Code splitting for better load times
+- Optimized build configuration
+- Efficient state management with React Query
+- Proper error boundary implementation
+- Request timeout handling
+- Efficient file handling
+
+## Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -129,3 +178,5 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Built with [Vite](https://vitejs.dev/)
 - UI components styled with [Tailwind CSS](https://tailwindcss.com/)
 - Animations powered by [Framer Motion](https://www.framer.com/motion/)
+- State management with [TanStack Query](https://tanstack.com/query)
+- File handling with [React Dropzone](https://react-dropzone.js.org/)

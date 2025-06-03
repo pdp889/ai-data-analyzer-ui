@@ -1,7 +1,7 @@
 import type { ChatResponse } from '../types/chat.types';
 
-const API_URL = process.env.VITE_API_URL + '/ask';
-const REQUEST_TIMEOUT = 30000; // 30 seconds
+const API_URL = import.meta.env.VITE_API_URL + '/ask';
+const REQUEST_TIMEOUT = 300000; // 5 minutes
 
 if (!API_URL) {
   throw new Error('VITE_API_URL environment variable is not set');
