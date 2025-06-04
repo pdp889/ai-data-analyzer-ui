@@ -28,7 +28,7 @@ export const AppContent = (): JSX.Element => {
 
   // Handle initial loading state for existing analysis
   if (preExistingAnalysisQuery.isLoading) {
-    return <LoadingSpinner status={HeaderStatus.FETCHING_ANALYSIS} />;
+    return <LoadingSpinner status={HeaderStatus.FETCHING_ANALYSIS} fileName='' />;
   }
 
   const showNewAnalysis = fileAnalysisMutation.isPending || fileAnalysisMutation.data;
@@ -40,7 +40,7 @@ export const AppContent = (): JSX.Element => {
     <div className="max-w-7xl mx-auto">
       {showNewAnalysis && (
         <>
-          {fileAnalysisMutation.isPending && <LoadingSpinner status={HeaderStatus.LOADING} />}
+          {fileAnalysisMutation.isPending && <LoadingSpinner status={HeaderStatus.LOADING} fileName={fileAnalysisMutation.variables === 'default' ? 'sample_foodborne_illness.csv' : fileAnalysisMutation.variables.name} />}
           {fileAnalysisMutation.data && (
             <AnalysisResults data={fileAnalysisMutation.data} onClear={handleClear} conversationHistory={undefined}/>
           )}

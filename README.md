@@ -7,7 +7,7 @@ An interactive web application that combines AI-powered data analysis with natur
 ## Features
 
 - **File Analysis**: Upload CSV files for instant AI-powered analysis
-- **Sample File Analysis**: Use a pre-configured sample file for quick testing
+- **Sample File Analysis**: Use a pre-configured sample file for quick testing. Source: https://catalog.data.gov/dataset/environmental-antecedents-of-foodborne-illness-outbreaks
 - **Interactive Chat**: Ask questions about your data in natural language
 - **Smart Insights**: Get automated insights and anomalies detection
 - **Dataset Profile**: View detailed statistics and information about your dataset
