@@ -18,13 +18,13 @@ export const sendChatMessage = async (question: string): Promise<ChatResponse> =
     const response = await Promise.race([
       fetch(API_URL, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest',
-          'X-Content-Type-Options': 'nosniff',
-        },
         body: JSON.stringify({ question }),
         credentials: 'include',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
+        },
         signal: controller.signal,
       }),
       createTimeoutPromise(REQUEST_TIMEOUT),

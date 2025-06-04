@@ -24,8 +24,8 @@ export const analyzeFile = async (file: File): Promise<AnalysisResponse> => {
         body: formData,
         credentials: 'include',
         headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-          'X-Content-Type-Options': 'nosniff',
+          'Accept': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
         },
         signal: controller.signal,
       }),

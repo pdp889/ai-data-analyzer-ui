@@ -20,8 +20,9 @@ export const fetchExistingAnalysis = async (): Promise<AnalysisResponse> => {
         method: 'GET',
         credentials: 'include',
         headers: {
-          'X-Requested-With': 'XMLHttpRequest',
-          'X-Content-Type-Options': 'nosniff',
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+          'X-Requested-With': 'XMLHttpRequest'
         },
         signal: controller.signal,
       }),

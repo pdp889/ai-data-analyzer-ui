@@ -10,6 +10,11 @@ export const clearSession = async (): Promise<ClearSessionResponse> => {
   const response = await fetch(API_URL, {
     method: 'DELETE',
     credentials: 'include',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+      'X-Requested-With': 'XMLHttpRequest'
+    }
   });
 
   if (!response.ok) {

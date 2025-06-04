@@ -42,6 +42,8 @@ export default defineConfig(({ mode }) => {
         'X-XSS-Protection': '1; mode=block',
         'Referrer-Policy': 'strict-origin-when-cross-origin',
         'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+        'Access-Control-Allow-Credentials': 'true',
+        'Access-Control-Allow-Origin': '*',
       },
       csp: {
         'default-src': "'self'",
@@ -54,7 +56,10 @@ export default defineConfig(({ mode }) => {
         'object-src': "'none'",
         'base-uri': "'self'",
         'frame-ancestors': "'none'",
-        'form-action': "'self'"
+        'form-action': "'self'",
+        'frame-src': "'self'",
+        'media-src': "'self'",
+        'upgrade-insecure-requests': 'true'
       }
     },
     css: {
