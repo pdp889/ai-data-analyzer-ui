@@ -1,4 +1,5 @@
 import type { ChatResponse } from '../types/chat.types';
+import { getAuthHeaders, setSessionToken, extractSessionToken } from '../../../shared/services/session.service';
 
 const API_URL = import.meta.env.VITE_API_URL + '/ask';
 const REQUEST_TIMEOUT = 300000; // 5 minutes
@@ -10,6 +11,21 @@ if (!API_URL) {
 const createTimeoutPromise = (ms: number): Promise<never> =>
   new Promise((_, reject) => setTimeout(() => reject(new Error('Request timeout')), ms));
 
+const handleResponse = async (response: Response): Promise<ChatResponse> => {
+  // Store the session token if it exists in the response
+  const sessionToken = extractSessionToken(response);
+  if (sessionToken) {
+    setSessionToken(sessionToken);
+  }
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ message: 'Failed to get answer' }));
+    throw new Error(error.message || 'Failed to get answer');
+  }
+
+  return response.json();
+};
+
 export const sendChatMessage = async (question: string): Promise<ChatResponse> => {
   try {
     const controller = new AbortController();
@@ -19,11 +35,9 @@ export const sendChatMessage = async (question: string): Promise<ChatResponse> =
       fetch(API_URL, {
         method: 'POST',
         body: JSON.stringify({ question }),
-        credentials: 'include',
         headers: {
-          'Accept': 'application/json',
+          ...getAuthHeaders(),
           'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'
         },
         signal: controller.signal,
       }),
@@ -31,13 +45,7 @@ export const sendChatMessage = async (question: string): Promise<ChatResponse> =
     ]);
 
     clearTimeout(timeoutId);
-
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({ message: 'Failed to get answer' }));
-      throw new Error(error.message || 'Failed to get answer');
-    }
-
-    return response.json();
+    return handleResponse(response);
   } catch (error) {
     if (error instanceof Error) {
       if (error.name === 'AbortError') {

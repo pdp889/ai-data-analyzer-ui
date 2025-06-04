@@ -1,4 +1,5 @@
 import type { AnalysisResponse } from '../../features/analysis/types/analysis.types';
+import { getAuthHeaders, setSessionToken, extractSessionToken } from './session.service';
 
 const API_URL = import.meta.env.VITE_API_URL + '/existing-analysis';
 const REQUEST_TIMEOUT = 300000; // 5 minutes
@@ -10,6 +11,25 @@ if (!API_URL) {
 const createTimeoutPromise = (ms: number): Promise<never> =>
   new Promise((_, reject) => setTimeout(() => reject(new Error('Request timeout')), ms));
 
+const handleResponse = async (response: Response): Promise<AnalysisResponse> => {
+  // Log all response headers for debugging
+  console.log('All response headers:', Object.fromEntries(response.headers.entries()));
+  
+  // Store the session token if it exists in the response
+  const sessionToken = extractSessionToken(response);
+  console.log('Session token from response:', sessionToken);
+  if (sessionToken) {
+    console.log('Setting session token in localStorage');
+    setSessionToken(sessionToken);
+  }
+
+  if (!response.ok) {
+    return { status: 'success', data: null, conversationHistory: undefined };
+  }
+
+  return response.json();
+};
+
 export const fetchExistingAnalysis = async (): Promise<AnalysisResponse> => {
   try {
     const controller = new AbortController();
@@ -18,11 +38,9 @@ export const fetchExistingAnalysis = async (): Promise<AnalysisResponse> => {
     const response = await Promise.race([
       fetch(API_URL, {
         method: 'GET',
-        credentials: 'include',
         headers: {
-          'Accept': 'application/json',
+          ...getAuthHeaders(),
           'Content-Type': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'
         },
         signal: controller.signal,
       }),
@@ -30,12 +48,7 @@ export const fetchExistingAnalysis = async (): Promise<AnalysisResponse> => {
     ]);
 
     clearTimeout(timeoutId);
-
-    if (!response.ok) {
-      return { status: 'success', data: null, conversationHistory: undefined };
-    }
-
-    return response.json();
+    return handleResponse(response);
   } catch (error) {
     if (error instanceof Error) {
       if (error.name === 'AbortError') {

@@ -1,4 +1,5 @@
 import type { ClearSessionResponse } from '../types/clear-session.types';
+import { getAuthHeaders, clearSessionToken } from '../../../shared/services/session.service';
 
 const API_URL = import.meta.env.VITE_API_URL + '/clear-session';
 
@@ -9,11 +10,9 @@ if (!API_URL) {
 export const clearSession = async (): Promise<ClearSessionResponse> => {
   const response = await fetch(API_URL, {
     method: 'DELETE',
-    credentials: 'include',
     headers: {
-      'Accept': 'application/json',
+      ...getAuthHeaders(),
       'Content-Type': 'application/json',
-      'X-Requested-With': 'XMLHttpRequest'
     }
   });
 
@@ -22,6 +21,8 @@ export const clearSession = async (): Promise<ClearSessionResponse> => {
     throw new Error(error.message || 'Failed to clear session');
   }
 
+  // Clear the session token after successful session clear
+  clearSessionToken();
   return response.json();
 };
 

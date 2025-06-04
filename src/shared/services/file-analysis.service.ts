@@ -1,4 +1,5 @@
 import type { AnalysisResponse } from '../../features/analysis/types/analysis.types';
+import { getAuthHeaders, setSessionToken } from './session.service';
 
 const API_URL = import.meta.env.VITE_API_URL + '/analyze';
 const DEFAULT_API_URL = import.meta.env.VITE_API_URL + '/analyze-default';
@@ -11,6 +12,21 @@ if (!API_URL) {
 const createTimeoutPromise = (ms: number): Promise<never> =>
   new Promise((_, reject) => setTimeout(() => reject(new Error('Request timeout')), ms));
 
+const handleResponse = async (response: Response): Promise<AnalysisResponse> => {
+  // Store the session token if it exists in the response
+  const sessionToken = response.headers.get('x-session-token');
+  if (sessionToken) {
+    setSessionToken(sessionToken);
+  }
+
+  if (!response.ok) {
+    const error = await response.json().catch(() => ({ message: 'Failed to analyze file' }));
+    throw new Error(error.message || 'Failed to analyze file');
+  }
+
+  return response.json();
+};
+
 export const analyzeFile = async (file: File | 'default'): Promise<AnalysisResponse> => {
   if (file === 'default') {
     try {
@@ -20,24 +36,14 @@ export const analyzeFile = async (file: File | 'default'): Promise<AnalysisRespo
       const response = await Promise.race([
         fetch(DEFAULT_API_URL, {
           method: 'POST',
-          credentials: 'include',
-          headers: {
-            'Accept': 'application/json',
-            'X-Requested-With': 'XMLHttpRequest'
-          },
+          headers: getAuthHeaders(),
           signal: controller.signal,
         }),
         createTimeoutPromise(REQUEST_TIMEOUT),
       ]);
   
       clearTimeout(timeoutId);
-  
-      if (!response.ok) {
-        const error = await response.json().catch(() => ({ message: 'Failed to analyze file' }));
-        throw new Error(error.message || 'Failed to analyze file');
-      }
-  
-      return response.json();
+      return handleResponse(response);
     } catch (error) {
       if (error instanceof Error) {
         if (error.name === 'AbortError') {
@@ -60,24 +66,14 @@ export const analyzeFile = async (file: File | 'default'): Promise<AnalysisRespo
       fetch(API_URL, {
         method: 'POST',
         body: formData,
-        credentials: 'include',
-        headers: {
-          'Accept': 'application/json',
-          'X-Requested-With': 'XMLHttpRequest'
-        },
+        headers: getAuthHeaders(),
         signal: controller.signal,
       }),
       createTimeoutPromise(REQUEST_TIMEOUT),
     ]);
 
     clearTimeout(timeoutId);
-
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({ message: 'Failed to analyze file' }));
-      throw new Error(error.message || 'Failed to analyze file');
-    }
-
-    return response.json();
+    return handleResponse(response);
   } catch (error) {
     if (error instanceof Error) {
       if (error.name === 'AbortError') {
