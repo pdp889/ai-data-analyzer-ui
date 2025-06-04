@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react()],
-    build: {
+    base: process.env.NODE_ENV === 'production' ? '/ai-data-analyzer-ui/' : '/',    build: {
       sourcemap: isDev,
       minify: 'terser',
       terserOptions: {
