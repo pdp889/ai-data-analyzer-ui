@@ -9,7 +9,7 @@ if (!API_URL) {
 }
 
 export const useFileAnalysis = () => {
-  return useMutation<AnalysisResponse, Error, File>({
+  return useMutation<AnalysisResponse, Error, File | 'default'>({
     mutationFn: analyzeFile,
   });
 };

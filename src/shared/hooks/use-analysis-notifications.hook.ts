@@ -5,7 +5,7 @@ import type { UseMutationResult, UseQueryResult } from '@tanstack/react-query';
 import type { AnalysisResponse } from '../../features/analysis/types/analysis.types';
 
 interface UseAnalysisNotificationsProps {
-  fileAnalysisMutation: UseMutationResult<AnalysisResponse, Error, File>;
+  fileAnalysisMutation: UseMutationResult<AnalysisResponse, Error, File | 'default'>;
   preExistingAnalysisQuery: UseQueryResult<AnalysisResponse, Error>;
 }
 

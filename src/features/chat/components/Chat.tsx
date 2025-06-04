@@ -8,9 +8,13 @@ import { MessageBubble } from './MessageBubble';
 import { LoadingDots } from './LoadingDots';
 import { MAX_MESSAGE_LENGTH, sanitizeInput } from '../utils/sanitize';
 
-export const Chat = (): JSX.Element => {
+interface ChatProps {
+  conversationHistory?: ChatMessage[];
+}
+
+export const Chat = ({ conversationHistory }: ChatProps): JSX.Element => {
   const [input, setInput] = useState('');
-  const { messages, sendMessage, isPending, error } = useChat();
+  const { messages, sendMessage, isPending, error } = useChat(conversationHistory ?? []);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const scrollToBottom = () => {

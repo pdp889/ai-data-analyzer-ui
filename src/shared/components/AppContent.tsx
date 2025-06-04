@@ -22,7 +22,7 @@ export const AppContent = (): JSX.Element => {
     queryClient.setQueryData(['existingAnalysis'], { status: 'success', data: null });
   };
 
-  const handleFileSelect = (file: File): void => {
+  const handleFileSelect = (file: File | 'default'): void => {
     fileAnalysisMutation.mutate(file);
   };
 
@@ -33,6 +33,7 @@ export const AppContent = (): JSX.Element => {
 
   const showNewAnalysis = fileAnalysisMutation.isPending || fileAnalysisMutation.data;
   const showExistingAnalysis = !showNewAnalysis && preExistingAnalysisQuery.data?.data;
+  const existingConversationHistory = preExistingAnalysisQuery.data?.conversationHistory;
   const showFileUpload = !showNewAnalysis && !showExistingAnalysis;
 
   return (
@@ -41,13 +42,13 @@ export const AppContent = (): JSX.Element => {
         <>
           {fileAnalysisMutation.isPending && <LoadingSpinner status={HeaderStatus.LOADING} />}
           {fileAnalysisMutation.data && (
-            <AnalysisResults data={fileAnalysisMutation.data} onClear={handleClear} />
+            <AnalysisResults data={fileAnalysisMutation.data} onClear={handleClear} conversationHistory={undefined}/>
           )}
         </>
       )}
 
       {showExistingAnalysis && preExistingAnalysisQuery.data && (
-        <AnalysisResults data={preExistingAnalysisQuery.data} onClear={handleClear} />
+        <AnalysisResults data={preExistingAnalysisQuery.data} onClear={handleClear} conversationHistory={existingConversationHistory} />
       )}
 
       {showFileUpload && <FileUpload onFileSelect={handleFileSelect} />}

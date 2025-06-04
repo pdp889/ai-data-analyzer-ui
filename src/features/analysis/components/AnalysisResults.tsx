@@ -9,13 +9,15 @@ import { HeaderStatus } from '../../../shared/types/header.types';
 
 import { useClearSession } from '../hooks/clear-session.hook';
 import { toast } from 'react-hot-toast';
+import type { ChatMessage } from '../../chat/types/chat.types';
 
 interface AnalysisResultsProps {
   data: AnalysisResponse;
   onClear?: () => void;
+  conversationHistory: ChatMessage[] | undefined;
 }
 
-export const AnalysisResults = ({ data, onClear }: AnalysisResultsProps) => {
+export const AnalysisResults = ({ data, onClear, conversationHistory }: AnalysisResultsProps) => {
   const [isProfileExpanded, setIsProfileExpanded] = useState(false);
   const { mutate: clearSession, isPending } = useClearSession();
 
@@ -115,7 +117,7 @@ export const AnalysisResults = ({ data, onClear }: AnalysisResultsProps) => {
           <div className="bg-white rounded-lg shadow p-4 h-full flex flex-col">
             <h2 className="text-lg font-semibold text-gray-800 mb-2">Ask Questions</h2>
             <div className="flex-1">
-              <Chat />
+              <Chat conversationHistory={conversationHistory} />
             </div>
           </div>
         </motion.div>

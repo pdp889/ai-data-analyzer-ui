@@ -32,7 +32,7 @@ export const fetchExistingAnalysis = async (): Promise<AnalysisResponse> => {
     clearTimeout(timeoutId);
 
     if (!response.ok) {
-      return { status: 'success', data: null };
+      return { status: 'success', data: null, conversationHistory: undefined };
     }
 
     return response.json();
@@ -43,6 +43,6 @@ export const fetchExistingAnalysis = async (): Promise<AnalysisResponse> => {
       }
       throw new Error('An error occurred while fetching existing analysis');
     }
-    return { status: 'success', data: null };
+    return { status: 'success', data: null, conversationHistory: undefined };
   }
 };

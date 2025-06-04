@@ -12,12 +12,14 @@ import {
   SUPPORTED_FILE_EXTENSIONS,
 } from '../constants/file-upload.constants';
 import { validateFile } from '../utils/validate';
+
 interface FileUploadProps {
-  onFileSelect: (file: File) => void;
+  onFileSelect: (file: File | 'default') => void;
 }
 
 
 export const FileUpload = ({ onFileSelect }: FileUploadProps): JSX.Element => {
+
   const onDrop = useCallback(
     (acceptedFiles: File[]): void => {
       const file = acceptedFiles[0];
@@ -50,9 +52,14 @@ export const FileUpload = ({ onFileSelect }: FileUploadProps): JSX.Element => {
         transition={{ duration: 0.5 }}
         className="text-center mb-8"
       >
-        <p className="text-gray-600">
-          Upload your data file to get started with AI-powered analysis
-        </p>
+        <motion.button
+          onClick={() => onFileSelect("default")}
+          className="mt-4 px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
+          whileHover={{ scale: 1.05 }}
+          whileTap={{ scale: 0.95 }}
+        >
+          {'Use Sample File'}
+        </motion.button>
       </motion.div>
 
       <motion.div

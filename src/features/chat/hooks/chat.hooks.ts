@@ -3,8 +3,8 @@ import { useMutation } from '@tanstack/react-query';
 import type { ChatMessage, ChatResponse, UseChatReturn } from '../types/chat.types';
 import { sendChatMessage } from '../services/chat.service';
 
-export const useChat = (): UseChatReturn => {
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
+export const useChat = (initialMessages: ChatMessage[] = []): UseChatReturn => {
+  const [messages, setMessages] = useState<ChatMessage[]>(initialMessages);
 
   const mutation = useMutation<ChatResponse, Error, string>({
     mutationFn: sendChatMessage,

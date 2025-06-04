@@ -1,3 +1,5 @@
+import type { ChatMessage } from "../../chat/types/chat.types";
+
 type ColumnType = 'numeric' | 'categorical' | 'datetime' | 'text';
 
 interface ColumnInfo {
@@ -18,10 +20,10 @@ interface AnalysisData {
   insights: Insight[];
   narrative: string;
 }
-
 export interface AnalysisResponse {
   status: 'success';
   data: AnalysisData | null;
+  conversationHistory: ChatMessage[] | undefined;
 }
 
 export interface Insight {
