@@ -1,21 +1,24 @@
 # AI Data Analyzer
 
+## View the Live Demo Site: https://pdp889.github.io/ai-data-analyzer-ui/
+
 An interactive web application that combines AI-powered data analysis with natural language chat capabilities. Upload your data files and get instant insights, or ask questions about your data in natural language.
 
 ## Features
 
-- **File Analysis**: Upload CSV, XLSX, or XLS files for instant AI-powered analysis
+- **File Analysis**: Upload CSV files for instant AI-powered analysis
+- **Sample File Analysis**: Use a pre-configured sample file for quick testing
 - **Interactive Chat**: Ask questions about your data in natural language
 - **Smart Insights**: Get automated insights and anomalies detection
 - **Dataset Profile**: View detailed statistics and information about your dataset
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
 - **Real-time Analysis**: Get instant feedback on your data
-- **Session Management**: Clear analysis sessions when needed
+- **Session Management**: Token-based session management with automatic token handling
 - **Secure File Handling**: Robust file validation and security measures
 
 ## Tech Stack
 
-- **Frontend**: React 18 + TypeScript + Vite
+- **Frontend**: React + TypeScript + Vite
 - **Styling**: Tailwind CSS
 - **State Management**: React Query (TanStack Query)
 - **Animations**: Framer Motion
@@ -35,6 +38,8 @@ An interactive web application that combines AI-powered data analysis with natur
 - Environment variable protection
 - Request timeout handling
 - Error handling without information leakage
+- Token-based session management
+- Secure token storage in localStorage
 
 ## Getting Started
 
@@ -57,13 +62,11 @@ An interactive web application that combines AI-powered data analysis with natur
    ```
 
 3. Environment Configuration:
-   Create a `.env.development` file with:
+   Create a `.env` file with:
    ```
    VITE_API_URL=http://localhost:3000/api
    VITE_ENV=development
    ```
-
-   For production, create a `.env.production` file with your production API URL.
 
 4. Start the development server:
    ```bash
@@ -122,11 +125,13 @@ src/
    - Services handle error handling and response formatting
    - Hooks use services for data fetching and mutations
    - Request timeouts and error handling implemented
+   - Automatic session token management
 
 3. **Shared Resources**:
    - Common components, hooks, and utilities are placed in the shared directory
    - Constants are separated into their own files
    - Type definitions are co-located with their features
+   - Centralized session management
 
 4. **Type Safety**:
    - Comprehensive TypeScript types for all components and functions
@@ -139,6 +144,7 @@ src/
    - Secure file handling and validation
    - Environment variable protection
    - Secure headers configuration
+   - Token-based session management
 
 ## Environment Variables
 
@@ -160,6 +166,7 @@ src/
 - Proper error boundary implementation
 - Request timeout handling
 - Efficient file handling
+- Automatic session token management
 
 ## Contributing
 
