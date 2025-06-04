@@ -1,8 +1,8 @@
-# FFood Intelligence: AI-Powered Data Analyzer
+# Food Intelligence: AI-Powered Data Analyzer
 
 ## View the Live Demo Site: https://pdp889.github.io/ai-data-analyzer-ui/
 
-An interactive web application that combines AI-powered data analysis with natural language chat capabilities. Upload your data files and get instant insights, or ask questions about your data in natural language.
+An interactive web application that combines AI-powered data analysis with natural language chat capabilities. Upload your food-related CSV files and get instant insights, enhanced by publically available FDA data, or ask questions about your data in natural language.
 
 ## Features
 
