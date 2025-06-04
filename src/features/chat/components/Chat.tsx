@@ -84,7 +84,7 @@ export const Chat = (): JSX.Element => {
                 handleSubmit(e as unknown as FormEvent<HTMLFormElement>);
               }
             }}
-            placeholder="Ask a question about the data..."
+            placeholder="Ask a question..."
             className="flex-1 p-2 text-sm border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm resize-none min-h-[40px] max-h-[120px]"
             disabled={isPending}
             rows={1}
