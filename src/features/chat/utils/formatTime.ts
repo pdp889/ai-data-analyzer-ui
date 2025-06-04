@@ -7,10 +7,10 @@ export const formatTime = (date: Date | string): string => {
       return 'Invalid date';
     }
 
-    return new Intl.DateTimeFormat('en-US', {
-      hour: 'numeric',
-      minute: 'numeric',
-      hour12: true,
+  return new Intl.DateTimeFormat('en-US', {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
     }).format(dateObj);
   } catch (error) {
     console.error('Error formatting date:', error);

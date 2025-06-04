@@ -19,7 +19,18 @@ interface AnalysisData {
   profile: Record<string, unknown>;
   insights: Insight[];
   narrative: string;
+  additionalContexts: AdditionalContext[];
 }
+
+type AdditionalContextType = 'FDA' | 'USDA';
+
+export interface AdditionalContext {
+  type: AdditionalContextType;
+  event: string;
+  relevanceToData: string;
+  date: string;
+}
+
 export interface AnalysisResponse {
   status: 'success';
   data: AnalysisData | null;

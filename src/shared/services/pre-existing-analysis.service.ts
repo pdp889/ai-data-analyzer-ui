@@ -12,14 +12,8 @@ const createTimeoutPromise = (ms: number): Promise<never> =>
   new Promise((_, reject) => setTimeout(() => reject(new Error('Request timeout')), ms));
 
 const handleResponse = async (response: Response): Promise<AnalysisResponse> => {
-  // Log all response headers for debugging
-  console.log('All response headers:', Object.fromEntries(response.headers.entries()));
-  
-  // Store the session token if it exists in the response
   const sessionToken = extractSessionToken(response);
-  console.log('Session token from response:', sessionToken);
   if (sessionToken) {
-    console.log('Setting session token in localStorage');
     setSessionToken(sessionToken);
   }
 

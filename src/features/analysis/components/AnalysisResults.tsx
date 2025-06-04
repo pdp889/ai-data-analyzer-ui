@@ -1,9 +1,9 @@
 import { useState } from 'react';
-import type { AnalysisResponse, Insight } from '../types/analysis.types';
+import { motion } from 'framer-motion';
+import type { AnalysisResponse, Insight, AdditionalContext } from '../types/analysis.types';
 import { Chat } from '../../chat/components/Chat';
 import { InsightCard } from './InsightCard';
 import { ChevronIcon } from './ChevronIcon';
-import { motion } from 'framer-motion';
 import { Header } from '../../../shared/components/Header';
 import { HeaderStatus } from '../../../shared/types/header.types';
 
@@ -29,7 +29,7 @@ export const AnalysisResults = ({ data, onClear, conversationHistory }: Analysis
     );
   }
 
-  const { profile, insights, narrative } = data.data;
+  const { profile, insights, narrative, additionalContexts } = data.data;
 
   const handleClear = () => {
     clearSession(undefined, {
@@ -44,92 +44,87 @@ export const AnalysisResults = ({ data, onClear, conversationHistory }: Analysis
   };
 
   return (
-    <div className="max-w-[1600px] mx-auto p-8">
-      <motion.div
-        initial={{ opacity: 0, x: 200 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{
-          duration: 0.5,
-          ease: 'easeOut',
-        }}
-        className="flex justify-between items-center"
-      >
+    <motion.div 
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+      className="max-w-[1600px] p-8"
+    >
+      <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-4">
         <Header status={HeaderStatus.ANALYSIS} />
-        <motion.button
+        <button
           onClick={handleClear}
           disabled={isPending}
-          className="px-4 py-2 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          className="mx-5 sm:w-auto px-4 py-2 text-sm bg-red-500 text-white rounded-lg hover:bg-red-600 disabled:opacity-50"
         >
           {isPending ? 'Clearing...' : 'Clear Analysis'}
-        </motion.button>
-      </motion.div>
-
-      {/* Main Content */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.3 }}
-        className="grid grid-cols-1 lg:grid-cols-12 gap-4"
-      >
-        {/* Left Column - Narrative */}
-        {narrative && (
-          <motion.div
-            initial={{ x: -20, opacity: 0 }}
-            animate={{ x: 0, opacity: 1 }}
-            transition={{ delay: 0.4 }}
-            className="lg:col-span-4"
-          >
-            <div className="bg-white rounded-lg shadow p-4 h-full">
+        </button>
+      </div>
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4">
+        <div className="lg:col-span-8 space-y-4">
+          {narrative && (
+            <div className="bg-white rounded-lg shadow p-4">
               <h2 className="text-lg font-semibold text-gray-800 mb-2">Narrative</h2>
               <p className="text-gray-600 text-sm">{narrative}</p>
             </div>
-          </motion.div>
-        )}
+          )}
 
-        {/* Middle Column - Insights */}
-        {insights && insights.length > 0 && (
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.5 }}
-            className="lg:col-span-4"
-          >
-            <div className="bg-white rounded-lg shadow p-4 h-full">
+          {insights && insights.length > 0 && (
+            <div className="bg-white rounded-lg shadow p-4">
               <h2 className="text-lg font-semibold text-gray-800 mb-2">Insights</h2>
-              <div className="space-y-2 h-[550px] overflow-y-auto">
+              <div className="space-y-2">
                 {insights.map((insight: Insight, index: number) => (
                   <InsightCard key={index} insight={insight} />
                 ))}
               </div>
             </div>
-          </motion.div>
-        )}
+          )}
 
-        {/* Right Column - Chat */}
-        <motion.div
-          initial={{ x: 20, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          className="lg:col-span-4"
-        >
-          <div className="bg-white rounded-lg shadow p-4 h-full flex flex-col">
-            <h2 className="text-lg font-semibold text-gray-800 mb-2">Ask Questions</h2>
-            <div className="flex-1">
+          {Array.isArray(additionalContexts) && additionalContexts.length > 0 && (
+            <div className="bg-white rounded-lg shadow p-4">
+              <h2 className="text-lg font-semibold text-gray-800 mb-2">Additional Context</h2>
+              <div className="space-y-4">
+                {additionalContexts.map((context: AdditionalContext, index: number) => (
+                  <div key={index} className="border-b border-gray-200 pb-4 last:border-0">
+                    <div className="flex items-center mb-3">
+                      <span className={`px-3 py-1 text-sm font-medium rounded-full ${
+                        context.type === 'FDA' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
+                      }`}>
+                        {context.type}
+                      </span>
+                    </div>
+                    <div className="space-y-3">
+                      <div>
+                        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Event</label>
+                        <p className="text-gray-700 text-sm leading-relaxed">{context.event}</p>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Why it matters</label>
+                        <p className="text-gray-700 text-sm leading-relaxed">{context.relevanceToData}</p>
+                      </div>
+                      <div>
+                        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Date</label>
+                        <p className="text-gray-700 text-sm">{context.date}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="lg:col-span-4">
+          <div className="bg-white rounded-lg shadow p-4 flex flex-col sticky top-4 h-[95vh]">
+            <h2 className="text-lg font-semibold text-gray-800 mb-4">Ask Questions</h2>
+            <div className="flex-1 min-h-0">
               <Chat conversationHistory={conversationHistory} />
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        {/* Dataset Profile - Full Width Below */}
         {profile && (
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.7 }}
-            className="lg:col-span-12"
-          >
+          <div className="lg:col-span-12">
             <div className="bg-white rounded-lg shadow p-4">
               <button
                 onClick={() => setIsProfileExpanded(!isProfileExpanded)}
@@ -140,22 +135,16 @@ export const AnalysisResults = ({ data, onClear, conversationHistory }: Analysis
               </button>
 
               {isProfileExpanded && (
-                <motion.div
-                  initial={{ height: 0, opacity: 0 }}
-                  animate={{ height: 'auto', opacity: 1 }}
-                  exit={{ height: 0, opacity: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="mt-2"
-                >
+                <div className="mt-2">
                   <pre className="text-sm text-gray-600 whitespace-pre-wrap bg-gray-50 p-3 rounded-lg overflow-auto max-h-48">
                     {JSON.stringify(profile, null, 2)}
                   </pre>
-                </motion.div>
+                </div>
               )}
             </div>
-          </motion.div>
+          </div>
         )}
-      </motion.div>
-    </div>
+      </div>
+    </motion.div>
   );
 };

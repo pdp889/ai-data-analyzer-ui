@@ -1,4 +1,4 @@
-# AI Data Analyzer
+# FFood Intelligence: AI-Powered Data Analyzer
 
 ## View the Live Demo Site: https://pdp889.github.io/ai-data-analyzer-ui/
 
