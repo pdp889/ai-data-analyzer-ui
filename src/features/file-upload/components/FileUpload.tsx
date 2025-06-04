@@ -7,19 +7,14 @@ import { FileIcon } from './FileIcon';
 import { UploadIcon } from './UploadIcon';
 import { Header } from '../../../shared/components/Header';
 import { HeaderStatus } from '../../../shared/types/header.types';
-import {
-  ACCEPTED_FILE_TYPES,
-  SUPPORTED_FILE_EXTENSIONS,
-} from '../constants/file-upload.constants';
+import { ACCEPTED_FILE_TYPES, SUPPORTED_FILE_EXTENSIONS } from '../constants/file-upload.constants';
 import { validateFile } from '../utils/validate';
 
 interface FileUploadProps {
   onFileSelect: (file: File | 'default') => void;
 }
 
-
 export const FileUpload = ({ onFileSelect }: FileUploadProps): JSX.Element => {
-
   const onDrop = useCallback(
     (acceptedFiles: File[]): void => {
       const file = acceptedFiles[0];
@@ -53,7 +48,7 @@ export const FileUpload = ({ onFileSelect }: FileUploadProps): JSX.Element => {
         className="text-center mb-8"
       >
         <motion.button
-          onClick={() => onFileSelect("default")}
+          onClick={() => onFileSelect('default')}
           className="mt-4 px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600 shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}

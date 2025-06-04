@@ -13,7 +13,7 @@ export const clearSession = async (): Promise<ClearSessionResponse> => {
     headers: {
       ...getAuthHeaders(),
       'Content-Type': 'application/json',
-    }
+    },
   });
 
   if (!response.ok) {
@@ -25,4 +25,3 @@ export const clearSession = async (): Promise<ClearSessionResponse> => {
   clearSessionToken();
   return response.json();
 };
-

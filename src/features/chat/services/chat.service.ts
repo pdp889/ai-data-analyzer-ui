@@ -1,5 +1,9 @@
 import type { ChatResponse } from '../types/chat.types';
-import { getAuthHeaders, setSessionToken, extractSessionToken } from '../../../shared/services/session.service';
+import {
+  getAuthHeaders,
+  setSessionToken,
+  extractSessionToken,
+} from '../../../shared/services/session.service';
 
 const API_URL = import.meta.env.VITE_API_URL + '/ask';
 const REQUEST_TIMEOUT = 300000; // 5 minutes

@@ -32,7 +32,7 @@ export const analyzeFile = async (file: File | 'default'): Promise<AnalysisRespo
     try {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
-  
+
       const response = await Promise.race([
         fetch(DEFAULT_API_URL, {
           method: 'POST',
@@ -41,7 +41,7 @@ export const analyzeFile = async (file: File | 'default'): Promise<AnalysisRespo
         }),
         createTimeoutPromise(REQUEST_TIMEOUT),
       ]);
-  
+
       clearTimeout(timeoutId);
       return handleResponse(response);
     } catch (error) {

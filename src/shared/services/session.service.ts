@@ -17,13 +17,13 @@ export const clearSessionToken = (): void => {
 export const getAuthHeaders = (): HeadersInit => {
   const token = getSessionToken();
   return {
-    'Accept': 'application/json',
+    Accept: 'application/json',
     'X-Requested-With': 'XMLHttpRequest',
-    ...(token ? { [SESSION_TOKEN_HEADER]: token } : {})
+    ...(token ? { [SESSION_TOKEN_HEADER]: token } : {}),
   };
 };
 
 export const extractSessionToken = (response: Response): string | null => {
   const token = response.headers.get(SESSION_TOKEN_HEADER);
   return token;
-}; 
+};

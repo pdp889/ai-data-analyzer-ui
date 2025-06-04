@@ -4,7 +4,9 @@ import type { ChatMessage, ChatResponse, UseChatReturn } from '../types/chat.typ
 import { sendChatMessage } from '../services/chat.service';
 
 export const useChat = (initialMessages: ChatMessage[] | undefined = []): UseChatReturn => {
-  const [messages, setMessages] = useState<ChatMessage[]>(Array.isArray(initialMessages) ? initialMessages : []);
+  const [messages, setMessages] = useState<ChatMessage[]>(
+    Array.isArray(initialMessages) ? initialMessages : []
+  );
 
   const mutation = useMutation<ChatResponse, Error, string>({
     mutationFn: sendChatMessage,

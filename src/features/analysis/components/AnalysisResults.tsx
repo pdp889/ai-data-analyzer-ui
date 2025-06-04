@@ -44,7 +44,7 @@ export const AnalysisResults = ({ data, onClear, conversationHistory }: Analysis
   };
 
   return (
-    <motion.div 
+    <motion.div
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
@@ -87,23 +87,35 @@ export const AnalysisResults = ({ data, onClear, conversationHistory }: Analysis
                 {additionalContexts.map((context: AdditionalContext, index: number) => (
                   <div key={index} className="border-b border-gray-200 pb-4 last:border-0">
                     <div className="flex items-center mb-3">
-                      <span className={`px-3 py-1 text-sm font-medium rounded-full ${
-                        context.type === 'FDA' ? 'bg-blue-100 text-blue-800' : 'bg-green-100 text-green-800'
-                      }`}>
+                      <span
+                        className={`px-3 py-1 text-sm font-medium rounded-full ${
+                          context.type === 'FDA'
+                            ? 'bg-blue-100 text-blue-800'
+                            : 'bg-green-100 text-green-800'
+                        }`}
+                      >
                         {context.type}
                       </span>
                     </div>
                     <div className="space-y-3">
                       <div>
-                        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Event</label>
+                        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">
+                          Event
+                        </label>
                         <p className="text-gray-700 text-sm leading-relaxed">{context.event}</p>
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Why it matters</label>
-                        <p className="text-gray-700 text-sm leading-relaxed">{context.relevanceToData}</p>
+                        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">
+                          Why it matters
+                        </label>
+                        <p className="text-gray-700 text-sm leading-relaxed">
+                          {context.relevanceToData}
+                        </p>
                       </div>
                       <div>
-                        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Date</label>
+                        <label className="block text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">
+                          Date
+                        </label>
                         <p className="text-gray-700 text-sm">{context.date}</p>
                       </div>
                     </div>

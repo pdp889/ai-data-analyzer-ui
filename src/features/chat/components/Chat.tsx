@@ -18,7 +18,7 @@ export const Chat = ({ conversationHistory }: ChatProps): JSX.Element => {
   const scrollToBottom = () => {
     chatContainerRef.current?.scrollTo({
       top: chatContainerRef.current.scrollHeight,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
   };
 
@@ -35,13 +35,13 @@ export const Chat = ({ conversationHistory }: ChatProps): JSX.Element => {
   const handleSend = () => {
     const trimmedInput = input.trim();
     if (!trimmedInput || isPending) return;
-    
+
     const result = sanitizeInput(trimmedInput);
     if (!result.isValid) {
       toast.error(result.error || 'An error occurred in the chat.');
       return;
     }
-    
+
     sendMessage(result.sanitizedInput);
     setInput('');
     requestAnimationFrame(scrollToBottom);
@@ -49,17 +49,8 @@ export const Chat = ({ conversationHistory }: ChatProps): JSX.Element => {
 
   return (
     <div className="flex flex-col h-full">
-      <MessageList 
-        messages={messages} 
-        isPending={isPending} 
-        containerRef={chatContainerRef} 
-      />
-      <ChatInput
-        input={input}
-        isPending={isPending}
-        onInputChange={setInput}
-        onSend={handleSend}
-      />
+      <MessageList messages={messages} isPending={isPending} containerRef={chatContainerRef} />
+      <ChatInput input={input} isPending={isPending} onInputChange={setInput} onSend={handleSend} />
     </div>
   );
 };

@@ -8,7 +8,12 @@ interface ChatInputProps {
   onSend: () => void;
 }
 
-export const ChatInput = ({ input, isPending, onInputChange, onSend }: ChatInputProps): JSX.Element => {
+export const ChatInput = ({
+  input,
+  isPending,
+  onInputChange,
+  onSend,
+}: ChatInputProps): JSX.Element => {
   const handleKeyDown = (e: KeyboardEvent<HTMLTextAreaElement>) => {
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault();
@@ -55,4 +60,4 @@ export const ChatInput = ({ input, isPending, onInputChange, onSend }: ChatInput
       </div>
     </div>
   );
-}; 
+};

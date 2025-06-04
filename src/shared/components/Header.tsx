@@ -7,14 +7,13 @@ interface HeaderProps {
   title?: string;
 }
 
-export const Header = ({
-  status,
-  title = HEADER_TITLE,
-}: HeaderProps): JSX.Element => {
+export const Header = ({ status, title = HEADER_TITLE }: HeaderProps): JSX.Element => {
   const subtitle = HEADER_SUBTITLES[status];
 
   return (
-    <div className={`mb-4 sm:mb-8 ${status === HeaderStatus.ANALYSIS ? 'max-w-[1600px] mx-5' : ''}`}>
+    <div
+      className={`mb-4 sm:mb-8 ${status === HeaderStatus.ANALYSIS ? 'max-w-[1600px] mx-5' : ''}`}
+    >
       <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
         <div className="flex flex-col space-y-2">
           <div className="flex items-center gap-2">

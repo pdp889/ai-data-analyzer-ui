@@ -11,16 +11,20 @@ interface LoadingSpinnerProps {
 export const LoadingSpinner = ({
   status = HeaderStatus.LOADING,
   spinnerSize = 'md',
-  fileName = ''
+  fileName = '',
 }: LoadingSpinnerProps): JSX.Element => {
-  const message = status === HeaderStatus.LOADING ? `Analyzing your data: ${fileName}` : 'Checking for existing analysis...';
+  const message =
+    status === HeaderStatus.LOADING
+      ? `Analyzing your data: ${fileName}`
+      : 'Checking for existing analysis...';
 
   return (
-  <div className="max-w-2xl mx-auto p-8">
-    <Header status={status} />
-    <div className="flex flex-col items-center justify-center space-y-4">
-      <Spinner size={spinnerSize} />
-      <p className="text-sm text-gray-600">{message}</p>
+    <div className="max-w-2xl mx-auto p-8">
+      <Header status={status} />
+      <div className="flex flex-col items-center justify-center space-y-4">
+        <Spinner size={spinnerSize} />
+        <p className="text-sm text-gray-600">{message}</p>
+      </div>
     </div>
-  </div>
-)};
+  );
+};

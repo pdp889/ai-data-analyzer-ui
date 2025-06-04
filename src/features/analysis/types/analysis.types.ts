@@ -1,4 +1,4 @@
-import type { ChatMessage } from "../../chat/types/chat.types";
+import type { ChatMessage } from '../../chat/types/chat.types';
 
 type ColumnType = 'numeric' | 'categorical' | 'datetime' | 'text';
 

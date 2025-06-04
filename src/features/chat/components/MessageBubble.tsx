@@ -7,7 +7,7 @@ interface MessageBubbleProps {
   index: number;
 }
 
-export const MessageBubble = ({ message, index }: MessageBubbleProps): JSX.Element => {
+export const MessageBubble = ({ message }: MessageBubbleProps): JSX.Element => {
   const isUser = message.role === 'user';
 
   return (

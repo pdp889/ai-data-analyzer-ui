@@ -12,27 +12,27 @@ export const sanitizeInput = (input: string): ValidationResult => {
     return {
       isValid: false,
       error: 'Message cannot be empty',
-      sanitizedInput: input
+      sanitizedInput: input,
     };
   }
-      
+
   if (input.length > MAX_MESSAGE_LENGTH) {
     return {
       isValid: false,
       error: `Message cannot exceed ${MAX_MESSAGE_LENGTH} characters`,
-      sanitizedInput: input
+      sanitizedInput: input,
     };
   }
-  
+
   // Remove any HTML tags
   const withoutHtml = input.replace(/<[^>]*>/g, '');
   // Remove any script tags or javascript: URLs
   const withoutScripts = withoutHtml.replace(/javascript:/gi, '');
   // Remove any potential XSS payloads
   const withoutXSS = withoutScripts.replace(/on\w+=/gi, '');
-  
+
   return {
     isValid: true,
-    sanitizedInput: withoutXSS
+    sanitizedInput: withoutXSS,
   };
 };
