@@ -6,7 +6,7 @@
   "homepage": "https://pdp889.github.io/ai-data-analyzer-ui",
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
+    "deploy": "gh-pages -d dist",
     "dev": "vite --mode development",
     "build": "tsc -b && vite build --mode production",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
