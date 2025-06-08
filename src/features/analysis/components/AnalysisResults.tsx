@@ -127,7 +127,7 @@ export const AnalysisResults = ({ data, onClear, conversationHistory }: Analysis
         </div>
 
         <div className="lg:col-span-4">
-          <div className="bg-white rounded-lg shadow p-4 flex flex-col sticky top-4 h-[95vh]">
+          <div className="bg-white rounded-lg shadow-sm p-6 flex flex-col sticky top-4 h-[95vh] max-h-[800px]">
             <h2 className="text-lg font-semibold text-gray-800 mb-4">Ask Questions</h2>
             <div className="flex-1 min-h-0">
               <Chat conversationHistory={conversationHistory} />
