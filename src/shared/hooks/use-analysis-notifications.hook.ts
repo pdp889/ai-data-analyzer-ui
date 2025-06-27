@@ -11,12 +11,17 @@ interface UseAnalysisNotificationsProps {
 
 export const useAnalysisNotifications = ({
   fileAnalysisMutation,
+  preExistingAnalysisQuery,
 }: UseAnalysisNotificationsProps): void => {
   useEffect(() => {
     if (fileAnalysisMutation.isSuccess) {
       toast.success(TOAST_MESSAGES.ANALYSIS_SUCCESS);
-    } else if (fileAnalysisMutation.isError) {
-      toast.error(fileAnalysisMutation.error?.message ?? TOAST_MESSAGES.ANALYSIS_ERROR);
     }
-  }, [fileAnalysisMutation.isSuccess, fileAnalysisMutation.isError, fileAnalysisMutation.error]);
+  }, [fileAnalysisMutation.isSuccess]);
+
+  useEffect(() => {
+    if (preExistingAnalysisQuery.isError) {
+      toast.error(TOAST_MESSAGES.EXISTING_ANALYSIS_ERROR);
+    }
+  }, [preExistingAnalysisQuery.isError]);
 };
