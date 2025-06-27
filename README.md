@@ -12,7 +12,8 @@ An interactive web application that combines AI-powered data analysis with natur
 - **Smart Insights**: Get automated insights and anomalies detection
 - **Dataset Profile**: View detailed statistics and information about your dataset
 - **Responsive Design**: Works seamlessly on desktop and mobile devices
-- **Real-time Analysis**: Get instant feedback on your data
+- **Real-time Agent Status**: Live updates showing which AI agent is currently working (Profiler, Detective, Storyteller, Additional Context)
+- **Asynchronous Analysis**: Non-blocking analysis with real-time progress updates via Server-Sent Events (SSE)
 - **Session Management**: Token-based session management with automatic token handling
 - **Secure File Handling**: Robust file validation and security measures
 
@@ -21,6 +22,7 @@ An interactive web application that combines AI-powered data analysis with natur
 - **Frontend**: React + TypeScript + Vite
 - **Styling**: Tailwind CSS
 - **State Management**: React Query (TanStack Query)
+- **Real-time Communication**: Server-Sent Events (SSE)
 - **Animations**: Framer Motion
 - **File Handling**: React Dropzone
 - **Notifications**: React Hot Toast
@@ -126,19 +128,25 @@ src/
    - Hooks use services for data fetching and mutations
    - Request timeouts and error handling implemented
    - Automatic session token management
+   - SSE service for real-time agent status updates
 
-3. **Shared Resources**:
+3. **Real-time Analysis Flow**:
+   - Analysis requests are sent asynchronously without blocking
+   - Server-Sent Events (SSE) provide real-time agent status updates
+   - Session tokens are included in SSE connections for authentication
+
+4. **Shared Resources**:
    - Common components, hooks, and utilities are placed in the shared directory
    - Constants are separated into their own files
    - Type definitions are co-located with their features
    - Centralized session management
 
-4. **Type Safety**:
+5. **Type Safety**:
    - Comprehensive TypeScript types for all components and functions
    - Explicit return types for better type inference
    - Shared type definitions for common interfaces
 
-5. **Security**:
+6. **Security**:
    - CSP implementation for resource control
    - Input sanitization for user inputs
    - Secure file handling and validation
@@ -167,6 +175,8 @@ src/
 - Request timeout handling
 - Efficient file handling
 - Automatic session token management
+- Non-blocking analysis with real-time updates
+- Optimized SSE connection management
 
 ## Contributing
 
